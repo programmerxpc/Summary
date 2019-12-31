@@ -195,52 +195,56 @@
 3. 删除配置文件
 
    ```
-rm -f /etc/my.cnf
+   rm -f /etc/my.cnf
    ```
+
 4. 删除数据目录
 
    ```
-rm -rf /var/lib/mysql/
+   rm -rf /var/lib/mysql/
    ```
 5. 添加国内10.2版本yum源
 
    ```
-vi  /etc/yum.repos.d/Mariadb.repo
+   vi  /etc/yum.repos.d/Mariadb.repo
 
-[mariadb]
-name = MariaDB
-baseurl = https://mirrors.ustc.edu.cn/mariadb/yum/10.2/centos7-amd64
-gpgkey=https://mirrors.ustc.edu.cn/mariadb/yum/RPM-GPG-KEY-MariaDB
-gpgcheck=1
-
+   [mariadb]
+   name = MariaDB
+   baseurl = https://mirrors.ustc.edu.cn/mariadb/yum/10.2/centos7-amd64
+   gpgkey=https://mirrors.ustc.edu.cn/mariadb/yum/RPM-GPG-KEY-MariaDB
+   gpgcheck=1
    ```
+
 6. 安装
 
    ```
-
-yum clean all
-yum makecache all
-
-yum install MariaDB-server MariaDB-client -y
+   yum clean all
+   yum makecache all
+   yum install MariaDB-server MariaDB-client -y
 
    ```
+
 7. 启动服务，并设为开机自启
 
    ```
-systemctl start mariadb.service
-systemctl enable mariadb.service
+   systemctl start mariadb.service
+   systemctl enable mariadb.service
+
    ```
 8. 和上面第一次一样，进行数据库配置
 
    ```
-/usr/bin/mysql_secure_installation
+   /usr/bin/mysql_secure_installation
 
-Enter current password for root (enter for none): Just press the Enter button
-Set root password? [Y/n]: Y
-New password: your-MariaDB-root-password
-Re-enter new password: your-MariaDB-root-password
-Remove anonymous users? [Y/n]: Y
-Disallow root login remotely? [Y/n]: n
-Remove test database and access to it? [Y/n]: Y
-Reload privilege tables now? [Y/n]: Y
+   Enter current password for root (enter for none): Just press the Enter button
+   Set root password? [Y/n]: Y
+   New password: your-MariaDB-root-password
+   Re-enter new password: your-MariaDB-root-password
+   Remove anonymous users? [Y/n]: Y
+   Disallow root login remotely? [Y/n]: n
+   Remove test database and access to it? [Y/n]: Y
+   Reload privilege tables now? [Y/n]: Y
    ```
+
+   ​
+
