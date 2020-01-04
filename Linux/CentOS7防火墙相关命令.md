@@ -18,7 +18,8 @@
 
    ```
    firewall-cmd --zone=public --add-port=3306/tcp --permanent  # 开启3306端口
-   firewall-cmd --reload  # 重启防火墙
+   firewall-cmd --reload  # 重启防火墙  
    ```
+   ​
 
 
