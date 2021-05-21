@@ -61,4 +61,17 @@
     source /etc/profile
    ```
 
-   ​
+
+# 三、Hadoop运行模式
+
+## 3.1 本地模式
+
+1. 将hadoop中etc/hadoop目录中的xml文件拷贝到input目录下
+
+   ```
+   cp etc/hadoop/*.xml input/
+   ```
+
+2. ```
+   hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar grep input/ output 'dfs[a-z.]+'
+   ```
