@@ -33,3 +33,32 @@
 
 # 二、Hadoop运行环境搭建
 
+1. 将hadoop解压到module文件夹
+
+   ```
+   tar -zxvf jdk-8u144-linux-x64.tar.gz  -C /opt/module/
+   ```
+
+2. 获取hadoop目录，配置环境变量
+
+   ```
+   pwd
+   vim /etc/profile
+   ```
+
+   在文件末尾添加：
+
+   ```
+   ##HADOOP_HOME
+   export HADOOP_HOME=/opt/module/hadoop-2.7.2
+   export PATH=$PATH:$HADOOP_HOME/bin
+   export PATH=$PATH:$HADOOP_HOME/sbin
+   ```
+
+3. 重新加载配置文件：
+
+   ```
+    source /etc/profile
+   ```
+
+   ​
