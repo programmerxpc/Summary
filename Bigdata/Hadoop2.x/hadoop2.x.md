@@ -118,7 +118,7 @@
 
    - 配置：core-site.xml
 
-     ```xml
+     ```
      <!-- 指定HDFS中NameNode的地址 -->
      <property>
      	<name>fs.defaultFS</name>
@@ -134,13 +134,14 @@
 
    - 配置：hdfs-site.xml
 
-     ```xml
+     ```
      <!-- 指定HDFS副本的数量 -->
      <property>
      	<name>dfs.replication</name>
        	<value>1</value>
      </property>
      ```
+
 
 2. 启动集群
 
@@ -155,15 +156,17 @@
 
    - 启动NameNode
 
-     ```sh
+     ```
      sbin/hadoop-daemon.sh start namenode
      ```
 
+
    - 启动DataNode
 
-     ```sh
+     ```
      sbin/hadoop-daemon.sh start datanode
      ```
+
 
 3. 查看集群
 
