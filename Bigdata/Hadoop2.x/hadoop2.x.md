@@ -37,20 +37,20 @@
 
 2. 将hadoop解压到module文件夹
 
-   ```
+   ```sh
    tar -zxvf jdk-8u144-linux-x64.tar.gz  -C /opt/module/
    ```
 
 3. 获取hadoop目录，配置环境变量
 
-   ```
+   ```sh
    pwd
    vim /etc/profile
    ```
 
 4. 在文件末尾添加：
 
-   ```
+   ```sh
    ##HADOOP_HOME
    export HADOOP_HOME=/opt/module/hadoop-2.7.2
    export PATH=$PATH:$HADOOP_HOME/bin
@@ -59,7 +59,7 @@
 
 5. 重新加载配置文件：
 
-   ```
+   ```sh
    source /etc/profile
    ```
 
@@ -71,11 +71,11 @@
 
 1. 将hadoop中etc/hadoop目录中的xml文件拷贝到input目录下
 
-   ```
+   ```sh
    cp etc/hadoop/*.xml input/
    ```
 
-2. ```
+2. ```sh
    hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar grep input/ output 'dfs[a-z.]+'
    ```
 
@@ -83,42 +83,40 @@
 
 1. 在hadoop目录下创建wcinput目录，在wcinput目录下创建wc.input文件，并写入测试数据
 
-   ```
+   ```sh
    mkdir wcinput
    ```
 
-   ```
+   ```sh
    touch wc.input
    ```
 
 2. 统计单词个数
 
-   ```
+   ```sh
    hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar wordcount wcinput/ wcoutput
    ```
 
 ## 3.2 伪分布式运行模式
 
-1. 配置集群
+(1) 配置集群
 
-   (a) 配置：hadoop-env.sh
+​	(a) 配置：hadoop-env.sh
 
-   LInux系统中获取JDK的安装路径：
+​	LInux系统中获取JDK的安装路径：
 
-   ```sh
-   echo $JAVA_HOME
-   ```
+```sh
+echo $JAVA_HOME
+```
 
-   修改JAVA_HOME路径：
+​	修改JAVA_HOME路径：
 
-   ```sh
-   export JAVA_HOME=/opt/module/jdk1.8.0_144
-   ```
+```sh
+export JAVA_HOME=/opt/module/jdk1.8.0_144
+```
+​	(b) 配置：core-site.xml
 
-
-   (b) 配置：core-site.xml
-
-   ```
+   ```xml
    <!-- 指定HDFS中NameNode的地址 -->
    <property>
    	<name>fs.defaultFS</name>
@@ -131,11 +129,11 @@
    </property>
    ```
 
-   ​
+   
 
-   (c) 配置：hdfs-site.xml
+​	(c) 配置：hdfs-site.xml
 
-   ```
+   ```xml
    <!-- 指定HDFS副本的数量 -->
    <property>
    	<name>dfs.replication</name>
@@ -143,40 +141,37 @@
    </property>
    ```
 
+(2) 启动集群
 
-2. 启动集群
+​	(a) 进入hadoop目录下
 
-   (a) 进入hadoop目录下
+​	格式化NameNode（第一次启动时格式化，以后不要总格式化）
 
-   格式化NameNode（第一次启动时格式化，以后不要总格式化）
-
-   ```sh
-   bin/hdfs namenode -format
-   ```
-
-
-   (b) 启动NameNode
-
-   ```
-   sbin/hadoop-daemon.sh start namenode
-   ```
-
-   (c) 启动DataNode
-
-   ```
-   sbin/hadoop-daemon.sh start datanode
-   ```
-
-
-3. 查看集群
-
-   (a) 查看是否启动成功
+```sh
+bin/hdfs namenode -format
+```
+​	(b) 启动NameNode
 
    ```sh
-   [root@xpc hadoop-2.7.2]# jps 
-   1812 DataNode
-   2022 Jps
-   129848 NameNode
+sbin/hadoop-daemon.sh start namenode
    ```
 
-   http://ip:50070
+​	(c) 启动DataNode
+
+   ```sh
+sbin/hadoop-daemon.sh start datanode
+   ```
+
+(3) 查看集群
+
+​	(a) 查看是否启动成功
+
+```sh
+[root@xpc hadoop-2.7.2]# jps 
+1812 DataNode
+2022 Jps
+129848 NameNode
+```
+
+​	http://ip:50070
+
