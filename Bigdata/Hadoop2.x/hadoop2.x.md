@@ -261,5 +261,40 @@ sbin/hadoop-daemon.sh start datanode
    sbin/yarn-daemon.sh start nodemanager
    ```
 
-   ​
+
+   ​		wordcount案例：
+
+   ```sh
+   bin/hdfs dfs -rm -r /usr/xpc/output
+   hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar wordcount /usr/xpc/input /usr/xpc/output
+   ```
+
+### 3.2.3 配置历史服务器
+
+​	为了查看程序的历史运行情况，需要配置一下历史服务器。具体配置步骤如下：
+
+1. 配置mapred-site.xml
+
+   ```xml
+   <!-- 历史服务器端地址 -->
+   <property>
+   	<name>mapreduce.jobhistory.address</name>
+     	<value>192.168.253.2:10020</value>
+   </property>
+   <!-- 历史服务器web端地址 -->
+   <property>
+   	<name>mapreduce.jobhistory.webapp.address</name>
+     	<value>192.168.253.2:19888</value>
+   </property>
+   ```
+
+2. 启动历史服务器
+
+   ```sh
+   [root@xpc hadoop-2.7.2]# sbin/mr-jobhistory-daemon.sh start historyserver
+   ```
+
+3. 查看JobHistory
+
+   http://192.168.253.2:19888/jobhistory
 
