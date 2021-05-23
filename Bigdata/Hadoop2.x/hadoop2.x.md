@@ -99,6 +99,8 @@
 
 ## 3.2 伪分布式运行模式
 
+### 3.2.1 启动HDFS并运行MapReduce程序
+
 (1) 配置集群
 
 ​	(a) 配置：hadoop-env.sh
@@ -173,5 +175,91 @@ sbin/hadoop-daemon.sh start datanode
 129848 NameNode
 ```
 
+​	(b) web端查看HDFS文件系统
+
 ​	http://ip:50070
+
+### 3.2.2 启动YARN并运行MapReduce程序
+
+1. 分析
+
+  ​（1）配置集群在YARN上运行MR
+
+  ​（2）启动、测试集群增、删、查
+
+  ​（3）在YARN上执行WordCount案例
+
+2. 执行步骤
+
+   （1）配置集群
+
+   ​	（a）配置yarn-env.sh
+
+   ​		配置一下JAVA_HOME
+
+   ```sh
+   # some Java parameters
+   export JAVA_HOME=/opt/module/jdk1.8.0_144
+   if [ "$JAVA_HOME" != "" ]; then
+     #echo "run java in $JAVA_HOME"
+     JAVA_HOME=$JAVA_HOME
+   fi
+
+   ```
+
+   ​	（b）配置yarn-site.xml
+
+   ```xml
+   <!-- Reducer获取数据的方式 -->
+   <property>
+   	<name>yarn.nodemanager.aux-services</name>
+     	<value>mapreduce_shuffle</value>
+   </property>
+
+   <!-- 指定YARN的ResourceManager的地址 -->
+   <property>
+   	<name>yarn.resourcemanager.hostname</name>
+     	<value>xpc</value>
+   </property>
+   ```
+
+   ​	（c）配置mapred-env.sh
+
+   ​		配置一下JAVA_HOME
+
+   ```sh
+   export JAVA_HOME=/opt/module/jdk1.8.0_144
+   ```
+
+   ​	（d）配置：（对mapred-site.xml.template重新命名为）mapred-site.xml
+
+   ```sh
+   mv mapred-site.xml.template mapred-site.xml
+   ```
+
+   ```xml
+   <!-- 指定MR运行在YARN上 -->
+   <property>
+   	<name>mapreduce.framework.name</name>
+     	<value>yarn</value>
+   </property>
+   ```
+
+   ​	（2）启动集群
+
+   ​		（a）启动前必须保证NameNode和DataNode已经启动
+
+   ​		（b）启动ResourceManager
+
+   ```sh
+   sbin/yarn-daemon.sh start resourcemanager
+   ```
+
+   ​		（c）启动NodeManager
+
+   ```sh
+   sbin/yarn-daemon.sh start nodemanager
+   ```
+
+   ​
 
