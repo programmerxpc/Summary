@@ -298,3 +298,58 @@ sbin/hadoop-daemon.sh start datanode
 
    http://192.168.253.2:19888/jobhistory
 
+
+### 3.2.4 配置日志的聚集
+
+​	日志聚集概念：应用运行完成以后，将程序运行日志信息上传到HDFS系统上。
+
+​	日志聚集功能好处：可以方便的查看到程序运行详情，方便开发调试。
+
+​	注意：开启日志聚集功能，需要重新启动NodeManager 、ResourceManager和HistoryManager。
+
+​	开启日志聚集功能具体步骤如下：
+
+1. 配置yarn-site.xml
+
+   ```xml
+   <!-- 日志聚集功能使能 -->
+   <property>
+   <name>yarn.log-aggregation-enable</name>
+   <value>true</value>
+   </property>
+
+   <!-- 日志保留时间设置7天 -->
+   <property>
+   <name>yarn.log-aggregation.retain-seconds</name>
+   <value>604800</value>
+   </property>
+   ```
+
+2. 关闭NodeManager、ResourceManager和HistoryManager
+
+   ```sh
+   [root@xpc hadoop-2.7.2]# sbin/mr-jobhistory-daemon.sh stop historyserver
+   [root@xpc hadoop-2.7.2]# sbin/yarn-daemon.sh stop nodemanager
+   [root@xpc hadoop-2.7.2]# sbin/yarn-daemon.sh stop resourcemanager
+   ```
+
+3. 启动NodeManager、ResourceManager和HistoryManager
+
+   ```sh
+   [root@xpc hadoop-2.7.2]# sbin/mr-jobhistory-daemon.sh start historyserver
+   [root@xpc hadoop-2.7.2]# sbin/yarn-daemon.sh start resourcemanager
+   [root@xpc hadoop-2.7.2]# sbin/yarn-daemon.sh start nodemanager
+   ```
+
+4. 删除HDFS上已经存在的输出文件
+
+   ```sh
+   bin/hdfs dfs -rm -r /usr/xpc/output
+   ```
+
+5. 执行WordCount程序
+
+   ```sh
+   hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar wordcount /usr/xpc/input /usr/xpc/output
+   ```
+
